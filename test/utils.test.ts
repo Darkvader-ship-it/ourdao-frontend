@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatFileSize, formatToken, parseToken } from '@/lib/utils'
+import { formatFileSize, formatToken, parseToken, formatThreshold } from '@/lib/utils'
 
 describe('formatToken', () => {
   it('renders a bare "0" for an exact zero value', () => {
@@ -104,5 +104,23 @@ describe('formatFileSize', () => {
   it('rounds to two decimal places', () => {
     // 1500 bytes = 1.464... KB -> 1.46 KB
     expect(formatFileSize(1500)).toBe('1.46 KB')
+  })
+})
+
+describe('formatThreshold', () => {
+  it('formats a whole-number basis-points value without trailing zeros', () => {
+    expect(formatThreshold(5100)).toBe('51%')
+  })
+
+  it('formats a fractional basis-points value with two decimals', () => {
+    expect(formatThreshold(5150)).toBe('51.50%')
+  })
+
+  it('formats zero as "0%"', () => {
+    expect(formatThreshold(0)).toBe('0%')
+  })
+
+  it('formats a value that yields one decimal place', () => {
+    expect(formatThreshold(515)).toBe('5.15%')
   })
 })

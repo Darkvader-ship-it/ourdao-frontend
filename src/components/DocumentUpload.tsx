@@ -1,16 +1,14 @@
 'use client'
 
 import { useState, useCallback, useRef } from 'react'
-import { 
-  CloudArrowUpIcon, 
-  DocumentIcon, 
-  EyeIcon, 
+import {
+  CloudArrowUpIcon,
+  EyeIcon,
   EyeSlashIcon,
   LockClosedIcon,
-  XMarkIcon,
-  CheckCircleIcon
+  XMarkIcon
 } from '@heroicons/react/24/outline'
-import { uploadToIPFS, uploadMultipleDocuments, DocumentMetadata } from '@/lib/ipfs'
+import { uploadMultipleDocuments, DocumentMetadata } from '@/lib/ipfs'
 import { formatFileSize } from '@/lib/utils'
 
 interface DocumentUploadProps {
