@@ -37,7 +37,9 @@ function StatusBadge({ status }: { status: number }) {
       ? 'default'
       : status === 4
         ? 'destructive'
-        : 'secondary'
+        : status === PROPOSAL_STATUS_AWAITING_FUNDS
+          ? 'outline'
+          : 'secondary'
   return (
     <Badge variant={variant}>
       {PROPOSAL_STATUS_LABELS[status as keyof typeof PROPOSAL_STATUS_LABELS]}
@@ -253,7 +255,7 @@ export default function GovernancePage() {
     )
   }
 
-  const thresholdPct = Math.round((stats.consensusThreshold || 0) / 100)
+  const thresholdPct = formatThreshold(stats.consensusThreshold || 0)
   const openProposals =
     loanProposals.filter((p) => p.status === 2).length +
     treasuryProposals.filter((p) => p.status === 2).length
@@ -290,7 +292,7 @@ export default function GovernancePage() {
         />
         <StatCard
           label="Consensus Threshold"
-          value={`${thresholdPct}%`}
+          value={thresholdPct}
           icon={ScaleIcon}
           tint="bg-amber-50 text-amber-600 dark:bg-amber-950/50 dark:text-amber-400"
         />

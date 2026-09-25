@@ -73,6 +73,11 @@ export function formatToken(
   }
 }
 
+// Mirrors the contract's cap (loans.rs): treasury * ratio / BASIS_POINTS.
+export function computeMaxLoan(treasury: bigint, ratioBasisPoints: number): bigint {
+  return (treasury * BigInt(ratioBasisPoints)) / BigInt(10000)
+}
+
 // Format dates to readable format
 export function formatDate(timestamp: number | string | Date): string {
   try {
@@ -98,6 +103,13 @@ export function formatDate(timestamp: number | string | Date): string {
   }
 }
 
+
+// Format a basis-points consensus threshold (e.g. 5150 → "51.50%").
+// Trims trailing zeros so whole-number thresholds stay clean ("51%", not "51.00%").
+export function formatThreshold(basisPoints: number): string {
+  const pct = basisPoints / 100
+  return pct % 1 === 0 ? `${pct}%` : `${pct.toFixed(2)}%`
+}
 
 // Calculate percentage for voting results
 export function calculatePercentage(votes: number, totalVotes: number): number {
@@ -156,6 +168,14 @@ export async function generateCommitment(support: boolean): Promise<{
   const commitment = new Uint8Array(hashBuffer)
 
   return { commitment, salt }
+}
+
+export function formatFileSize(bytes: number): string {
+  if (bytes === 0) return '0 Bytes'
+  const k = 1024
+  const sizes = ['Bytes', 'KB', 'MB', 'GB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
 }
 
 const SALT_STORAGE_KEY = 'ourdao-commit-salt'
