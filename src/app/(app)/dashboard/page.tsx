@@ -17,7 +17,8 @@ import {
   TrophyIcon,
 } from '@heroicons/react/24/outline'
 import { useDAOStats, useUserData, useRewards, useDAOEvents, eventLabel } from '@/hooks/useDAO'
-import { formatToken, formatDate, formatAddress } from '@/lib/utils'
+import { formatToken, formatDate } from '@/lib/utils'
+import { formatStellarAddress } from '@/lib/stellar'
 import { MEMBER_STATUS_LABELS } from '@/constants'
 import toast from 'react-hot-toast'
 import { useIsMobile, useResponsiveCardLayout } from '@/lib/responsive'
@@ -191,7 +192,7 @@ export default function DashboardPage() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-foreground">
-                      {formatAddress(userData.address || '')}
+                      {formatStellarAddress(userData.address || '')}
                     </h3>
                     <p className="text-sm text-muted-foreground">
                       Status: {MEMBER_STATUS_LABELS[userData.member?.status || 0]}

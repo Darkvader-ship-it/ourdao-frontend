@@ -31,7 +31,8 @@ import {
   type UILoan,
 } from '@/hooks/useDAO'
 import { useNow } from '@/hooks/useNow'
-import { formatToken, formatDate, formatAddress, calculatePercentage } from '@/lib/utils'
+import { formatToken, formatDate, calculatePercentage } from '@/lib/utils'
+import { formatStellarAddress } from '@/lib/stellar'
 import { PROPOSAL_STATUS_LABELS, IPFS_GATEWAY } from '@/constants'
 import toast from 'react-hot-toast'
 import { PageHeader } from '@/components/PageHeader'
@@ -213,7 +214,7 @@ export default function LoanDetailsPage() {
 
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Borrower</span>
-                  <span className="font-medium text-foreground">{formatAddress(proposal.borrower)}</span>
+                  <span className="font-medium text-foreground">{formatStellarAddress(proposal.borrower)}</span>
                 </div>
 
                 {/* Voting Progress */}
